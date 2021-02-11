@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>노래 맞추기</title>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" href="//unpkg.com/bootstrap@4/dist/css/bootstrap.min.css">
+    <script src='//unpkg.com/popper.js@1/dist/umd/popper.min.js'></script>
+    <script src='//unpkg.com/bootstrap@4/dist/js/bootstrap.min.js'></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="//unpkg.com/bootstrap@4/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="custom.css"/>
+  </head>
+  <body>
+    <div class="container">
+      <div class="progress">
+        <div class="progress-bar bg-warning index-progress" role="progressbar" style="width: 0%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">1/10</div>
+      </div>
+      <div class="title text-center py-5">
+        <h1>노래 맞추기 게임<br><font style="font-family: 'Montserrat', sans-serif; color: deeppink"> for <strong>MJ</strong></font></h1>
+        <h2></h2>
+      </div>
+
+      <div class="pass-button-container py-3">
+        <button type="button" class="btn btn-primary pass-button" disabled>건너뛰기</button>
+      </div>
+
+      <div class="level-container text-center py-5">
+        <h3>난이도</h3>
+        <div class="row justify-content-center">
+          <div class="level">
+            <i class="fas fa-3x fa-star"></i>
+            <i class="fas fa-3x fa-star"></i>
+          </div>
+          <div class="level">
+            <i class="fas fa-3x fa-star"></i>
+            <i class="fas fa-3x fa-star"></i>
+          </div>
+          <div class="level">
+            <i class="fas fa-3x fa-star"></i>
+            <i class="fas fa-3x fa-star"></i>
+          </div>
+          <div class="level">
+            <i class="fas fa-3x fa-star"></i>
+            <i class="fas fa-3x fa-star"></i>
+          </div>
+          <div class="level">
+            <i class="fas fa-3x fa-star"></i>
+            <i class="fas fa-3x fa-star"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="main-contents-container row justify-content-center">
+        <img src="img/main.png" class="img-fluid mx-auto d-block" />
+      </div>
+
+      <div class="blob-container row justify-content-center">
+        <div class="blob-green text-center blob">
+          <i class="fab fa-9x fa-itunes-note text-center" style="color: white;"></i>
+        </div>
+      </div>
+
+      <div class="col-md-8 result-container">
+        <div class="row">
+          <div class="result-time">
+            <h3>소요시간</h3>
+            <h1></h1>
+          </div>
+          <div class="result-score">
+            <h3>정답 수</h3>
+            <h1></h1>
+          </div>
+        </div>
+        <div class="result-person mx-auto py-5 px-5">
+          <h2>당신의 실력은...</h2>
+          <div class="profile py-5">
+            <img src="" class="thumbnail">
+            <h5 class="">이수근</h5>
+          </div>
+          <h4></h4>
+        </div>
+      </div>
+
+      <div class="timer-container">
+        <h1></h1>
+      </div>
+
+      <div class="player-container">
+        <div id="player" style="display: none;"></div>
+      </div>
+
+      <div class="start-button-container py-5">
+        <button type="button" class="btn btn-danger start-button">노래 맞추기 시작하기</button>
+      </div>
+
+      <div class="input-container py-5">
+        <div class="input-group py-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">정답</span>
+          </div>
+          <input type="text" class="form-control input-answer" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+          <div class="input-group-append button-answer">
+            <button class="btn btn-success" type="button">확인</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="progress-container my-5">
+        <h2>총 제한시간 120초</h2>
+        <div class="progress">
+          <div class="progress-bar bg-danger progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="">
+            asdads
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+      console.log( '사계 (Four Seasons)'.replace(/ /gi, "").split('(')[0] );
+      let time = 0;
+      let num = 1;
+      let level = 1;
+      let grade = 0;
+      let answer = "";
+      let videoId = "";
+      let start = 0;
+      var player;
+      let gameFlag = true;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          // height: '100%',
+          // width: '100%',
+          videoId: "",
+          playerVars: {
+            'autoplay': 0, // 자동재생
+            'controls': 1, // 재생컨트롤 노출여부
+            'autohide': 0, // 재생컨트롤이 자동으로 사라질지의 여부
+            'rel': 0, // 동영상 재생완료 후 유사동영상 노출여부
+            'playsinline': 1, // 현페이지에서 재생
+            'wmode': 'transparent',
+          }
+        });
+      }
+
+      function onPlayerReady(event) {
+        event.target.playVideo();
+      }
+
+      function endVideo() {
+        player.pauseVideo();
+        $(".blob-green").removeClass("blob");
+        $(".fa-itunes-note").removeClass("note");
+        $(".pass-button").prop('disabled', false);
+      }
+
+      let playSeconds = 0; // 음악 재생시간
+
+      function startVideo() {
+        player.loadVideoById(videoId, start);
+        player.playVideo();
+        setTimeout(endVideo, playSeconds);
+      }
+
+      let seconds = 4; // 음악재생 카운트 다운
+
+      function playTimer() {
+        if (!gameFlag) {
+          return;
+        }
+        $(".timer-container h1").text(seconds);
+        $(".timer-container").show();
+        if (seconds==0) {      
+          if (!gameFlag) {
+            return;
+          }
+          clearInterval(timer);
+          $(".timer-container").hide();
+          $(".input-container").show();
+          $(".progress-container").show();
+          $(".blob-container").show();
+          $(".pass-button-container").show();
+          $(".blob-green").addClass("blob");
+          $(".fa-itunes-note").addClass("note");
+          $(".pass-button").prop('disabled', true);
+        } else {
+          seconds--;
+        }
+      }
+      
+      let gameSeconds = 30; // 게임 제한시간
+
+      function gameTimer() {
+        $(".progress-container .progress-bar").text(gameSeconds +"초")
+        if (gameSeconds==0) { 
+          gameFlag = false;     
+          clearInterval(gameTimer);
+          player.pauseVideo();
+          $(".level-container").hide();
+          $(".title").hide();
+          $(".blob-container").hide();
+          $(".timer-container").hide();
+          $(".start-button").hide();
+          $(".progress-container").hide();
+          $(".input-container").hide();
+          $(".pass-button-container").hide();
+          clearInterval(gTimer);
+          $(".title h1").text("제한시간 종료!");
+          $(".title h2").text("결과를 확인해 주세요.");
+          $(".title").show();
+          $(".start-button").text("결과보기");
+          $(".start-button").show();
+        } else {
+          gameSeconds--;
+        }
+      }
+
+      function endQuiz() {
+        gameFlag = false;     
+        clearInterval(gameTimer);
+        player.pauseVideo();
+        $(".level-container").hide();
+        $(".title").hide();
+        $(".blob-container").hide();
+        $(".timer-container").hide();
+        $(".start-button").hide();
+        $(".progress-container").hide();
+        $(".input-container").hide();
+        $(".pass-button-container").hide();
+        clearInterval(gTimer);
+        $(".title h1").text("모든 노래를 들었습니다.");
+        $(".title h2").text("결과를 확인해 주세요.");
+        $(".title").show();
+        $(".start-button").text("결과보기");
+        $(".start-button").show();
+      }
+
+      function loadPlayList() {
+        $.ajax({
+          type: "GET",
+          dataType: "JSON",
+          url: "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=PLberYIcFsD68X_8bqTlwivUWTF4llVlBb&key=AIzaSyBFvVdPJQvzgcOBm1C1GLItXpOudlxZ6Cg",
+          contentType: "application/json",
+          success: function (jsonData) {
+            // console.log(jsonData)
+            let index = Math.floor(Math.random() * jsonData.items.length);
+            let items = jsonData.items[index];
+            videoId = items.snippet.resourceId.videoId;
+            answer = items.snippet.title;
+            // console.log(items);
+            // console.log(items.snippet.title);
+            // console.log(items.snippet.title.split("'")[1]);
+
+            if ( answer.includes("'") ) {
+              answer = answer.split("'")[1].replace(/ /gi, "");
+            } else if ( answer.includes("-") ) {
+              answer = answer.split("-")[1].replace(/ /gi, "");
+            } else {
+              answer = answer.replace(/ /gi, "");
+            }
+
+            if ( answer.includes("(") ) {
+              answer = answer.split("(")[0];
+            }
+            answer = answer.toLowerCase();
+            // console.log(answer);
+          },
+          complete: function (data) {
+
+          },
+          error: function (xhr, status, error) {
+            console.log("유튜브 요청 에러: " + error);
+          },
+        });
+      }
+
+      function checkAnswer() {
+        if ( $(".input-answer").val().replace(/ /gi, "").toLowerCase()==answer ) {
+          Swal.fire({
+            icon: 'success',
+            title: '정답입니다!',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          grade++;
+          $("#grade").val(grade);
+
+          if ( num==10 ) {
+            time = gameSeconds;
+            endQuiz();
+            return;
+          }
+
+          $(".input-container input").val("");
+          $(".input-container").hide();
+          $(".start-button").text("다음문제");
+          $(".start-button").show();
+          $(".blob-container").hide();
+          $(".pass-button-container").hide();
+          level++;
+          num++;
+
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: '오답입니다.',
+            text: '제한시간 안에 다시 입력해 주세요!',
+            timer: 1500
+          });
+        }
+      }
+
+      $(".button-answer").on("click", function () {
+        checkAnswer();
+      });
+
+      $(".input-answer").on("keyup",function (e) {
+        if (e.keyCode == 13) {
+          checkAnswer();
+        }
+      });
+
+      // 건너뛰기
+      $(".pass-button").on("click", function() {
+        Swal.fire({
+          title: '이번 곡을 포기하고 <br>다음 곡으로 건너뛸까요?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: '건너뛰기',
+          cancelButtonText: '취소'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            if ( num==10 ) {
+              endQuiz();
+              return;
+            }
+            $(".pass-button-container").hide();
+            $(".input-container input").val("");
+            $(".input-container").hide();
+            $(".start-button").text("다음문제");
+            $(".start-button").show();
+            $(".blob-container").hide();
+            num++;
+          }
+        })
+      });
+
+      // 첫 화면 시작
+      $(".start-button").on("click", function() {
+        if ( $(".start-button").text()=="결과보기" ) {
+          $(".title h1").text("게임 결과");
+          if (gameSeconds!=0) {
+            min = Math.floor((120 - time)/60);
+            sec = 60 - time;
+            $(".result-time h1").text(min + " : " + sec);
+          } else {
+            $(".result-time h1").text("2 : 00");
+          }
+          $(".result-score h1").text(grade + " / 10");
+          
+          if (grade==10) {
+            $(".profile img").attr("src", "img/ai.png");
+            $(".profile h5").text("기계");
+            $(".result-person h4").text("놀라워요.. AI인가요?");
+          } else if (grade==8) {
+            $(".profile img").attr("src", "img/kim.png");
+            $(".profile h5").text("김희철");
+            $(".result-person h4").text("굉장한 실력이에요!");
+            $(".result-person h4").append("“<br>고성능 노래 검색기”");
+          } else if (grade==6) {
+            $(".profile img").attr("src", "img/mj.png");
+            $(".profile h5").text("MJ");
+            $(".result-person h4").text("뛰어난 실력을 갖고 있네요.");
+            $(".result-person h4").append("<br>서구에 거주하는 대장부 노래 검색기.");
+          } else if (grade==4) {
+            $(".profile img").attr("src", "img/lee.png");
+            $(".profile h5").text("이수근");
+            $(".result-person h4").text("괜찮은 실력이군요.");
+            $(".result-person h4").append("<br>인간미 있는 노래 검색기.");
+          } else if (grade==2) {
+            $(".profile img").attr("src", "img/eun.png");
+            $(".profile h5").text("은지원");
+            $(".result-person h4").text("나쁘지 않은 실력이군요.");
+          } else {
+            $(".profile img").attr("src", "img/kang.png");
+            $(".profile h5").text("강호동");
+            $(".result-person h4").text("당신은 바보인가요?");
+            $(".result-person h4").append("<br>아주 많이 분발하셔야겠어요.");
+          }
+
+          $(".result-container").fadeIn();
+          return;
+        }
+        if ( $(".start-button").text()=="노래 맞추기 시작하기" ) {
+          gTimer = setInterval(gameTimer, 1000);
+          $(".progress-container .progress-bar").addClass("remain-time");
+        }
+        gameStart();
+      });
+
+      // 게임시작 버튼
+      function gameStart() {
+        $(".index-progress").css("width", String(num / 10 * 100) + "%");
+        $(".index-progress").text(num + "/10");
+        seconds = 4;
+        playSeconds = 10000 - (Math.round(level/2)*1750);
+        $(".progress").show();
+        start = Math.floor(Math.random() * 60)
+        loadPlayList();
+        $(".title h1").text("문제 " + num);
+        $(".level-container").show();
+        $(".level-container .row .level:nth-child(" + Math.round(level/2) + ") i:nth-child(1)").addClass("vanishIn");
+        $(".main-contents-container").hide();
+        $(".start-button").hide();
+        timer = setInterval(playTimer, 1000);
+        setTimeout(startVideo, 4500);
+        console.log( grade );
+      }
+
+    </script>
+  </body>
+</html>
