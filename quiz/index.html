@@ -371,6 +371,7 @@
       $(".start-button").on("click", function() {
         $(".title h2").text("");
         if ( $(".start-button").text()=="결과보기" ) {
+          $(".start-button").hide();
           $(".title h1").text("게임 결과");
           if (gameSeconds!=0) {
             min = Math.floor((120 - time)/60);
