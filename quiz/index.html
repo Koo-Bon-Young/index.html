@@ -70,7 +70,7 @@
       <div class="col-md-8 result-container">
         <div class="row">
           <div class="result-time">
-            <h3>소요시간</h3>
+            <h3>남은시간</h3>
             <h1></h1>
           </div>
           <div class="result-score">
@@ -374,11 +374,23 @@
           $(".start-button").hide();
           $(".title h1").text("게임 결과");
           if (gameSeconds!=0) {
-            min = Math.floor((120 - time)/60);
-            sec = 60 - time;
-            $(".result-time h1").text(min + " : " + sec);
+            if (gameSeconds >= 60) {
+              if (gameSeconds-60 >= 10) {
+                $(".result-time h1").text("1 : " + gameSeconds-60);
+              } else {
+                $(".result-time h1").text("1 : 0" + gameSeconds-60);
+              }
+              
+            } else {
+              if (gameSeconds>=10) {
+                $(".result-time h1").text("0 : " + gameSeconds);
+              } else {
+                $(".result-time h1").text("0 : 0" + gameSeconds);
+              }
+            }
+            
           } else {
-            $(".result-time h1").text("2 : 00");
+            $(".result-time h1").text("0 : 00" + gameSeconds);
           }
           $(".result-score h1").text(grade + " / 10");
           
