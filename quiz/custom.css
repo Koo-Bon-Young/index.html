@@ -261,3 +261,40 @@ strong {
     text-align: center;
     color: darkviolet;
 }
+
+.fa-exclamation-circle {
+    vertical-align: middle;
+    color: gold;
+    
+}
+
+@keyframes bell {
+    0%, 50%{
+        transform: rotate(0deg);
+        }
+    5%, 15%, 25%, 35%, 45% {
+        transform: rotate(13deg);
+    }
+    10%, 20%, 30%, 40% {
+        transform: rotate(-13deg);
+    }
+}
+
+.tool-tip {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.title h2 {
+    animation: bell 2s infinite linear;
+}
+
+
+.tooltip-inner {
+    max-width: 350px;
+    text-align: left;
+    /* If max-width does not work, try using width instead */
+    /* width: 350px;  */
+}

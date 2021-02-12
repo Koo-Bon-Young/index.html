@@ -24,7 +24,7 @@
       </div>
       <div class="title text-center py-3">
         <h1>노래 맞추기 게임<br><font style="font-family: 'Montserrat', sans-serif; color: deeppink"> for <strong>MJ</strong></font></h1>
-        <h2></h2>
+        <h2><span data-html="true" data-toggle="tooltip" data-placement="right" title="1. 정답입력 : 띄어쓰기 및 대소문자 구분 없음<br>2. 제한시간 : 120초<br>3. 난이도 : 1단계 ~ 5단계, 난이도에 따라 재생시간 감소<br>4. 건너뛰기 기능 : 모르는 노래 스킵 가능<br>5. 게임 결과 : 시간이 초과되거나 10문제 진행 후 확인"><i class="fas fa-exclamation-circle"></i> 게임방법</span></h2>
       </div>
 
       <div class="pass-button-container py-1">
@@ -170,7 +170,7 @@
         setTimeout(endVideo, playSeconds);
       }
 
-      let seconds = 4; // 음악재생 카운트 다운
+      let seconds = 3; // 음악재생 카운트 다운
 
       function playTimer() {
         if (!gameFlag) {
@@ -196,7 +196,7 @@
         }
       }
       
-      let gameSeconds = 116; // 게임 제한시간
+      let gameSeconds = 120; // 게임 제한시간
 
       function gameTimer() {
         $(".progress-container .progress-bar").text(gameSeconds +"초")
@@ -369,6 +369,7 @@
 
       // 첫 화면 시작
       $(".start-button").on("click", function() {
+        $(".title h2").text("");
         if ( $(".start-button").text()=="결과보기" ) {
           $(".title h1").text("게임 결과");
           if (gameSeconds!=0) {
@@ -388,12 +389,12 @@
             $(".profile img").attr("src", "img/kim.png");
             $(".profile h5").text("김희철");
             $(".result-person h4").text("굉장한 실력이에요!");
-            $(".result-person h4").append("“<br>고성능 노래 검색기”");
+            $(".result-person h4").append("“<br>고성능 노래 검색기!”");
           } else if (grade>=6) {
             $(".profile img").attr("src", "img/mj.png");
             $(".profile h5").text("MJ");
             $(".result-person h4").text("뛰어난 실력을 갖고 있네요.");
-            $(".result-person h4").append("<br>서구에 거주하는 대장부 노래 검색기.");
+            $(".result-person h4").append("<br>서구에 거주하는 대장부, 노래 검색 토끼!");
           } else if (grade>=4) {
             $(".profile img").attr("src", "img/lee.png");
             $(".profile h5").text("이수근");
@@ -424,10 +425,10 @@
       function gameStart() {
         $(".index-progress").css("width", String(num / 10 * 100) + "%");
         $(".index-progress").text(num + "/10");
-        seconds = 4;
+        seconds = 3;
         playSeconds = 10000 - (Math.round(level/2)*1750);
         $(".progress").show();
-        start = Math.floor(Math.random() * 60)
+        start = Math.floor(Math.random() * 30) + 30
         loadPlayList();
         $(".title h1").text("문제 " + num);
         $(".level-container").show();
@@ -435,9 +436,17 @@
         $(".main-contents-container").hide();
         $(".start-button").hide();
         timer = setInterval(playTimer, 1000);
-        setTimeout(startVideo, 4500);
+        setTimeout(startVideo, 3500);
         console.log( grade );
       }
+
+      $(function () {
+        $('[data-toggle="tooltip"]').tooltip({
+          animated: 'fade',
+          placement: 'bottom',
+          trigger: 'click hover'
+        });
+      })
 
     </script>
   </body>
