@@ -379,16 +379,16 @@
           if (gameSeconds!=0) {
             if (time >= 60) {
               if (time-60 >= 10) {
-                $(".result-time h1").text("1 : " + string(time-60));
+                $(".result-time h1").text("1 : " + String(time-60));
               } else {
-                $(".result-time h1").text("1 : 0" + string(time-60));
+                $(".result-time h1").text("1 : 0" + String(time-60));
               }
               
             } else {
               if (time>=10) {
-                $(".result-time h1").text("0 : " + string(time));
+                $(".result-time h1").text("0 : " + String(time));
               } else {
-                $(".result-time h1").text("0 : 0" + string(time));
+                $(".result-time h1").text("0 : 0" + String(time));
               }
             }
             
