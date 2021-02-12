@@ -374,23 +374,23 @@
           $(".start-button").hide();
           $(".title h1").text("게임 결과");
           if (gameSeconds!=0) {
-            if (gameSeconds >= 60) {
-              if (gameSeconds-60 >= 10) {
-                $(".result-time h1").text("1 : " + gameSeconds-60);
+            if (time >= 60) {
+              if (time-60 >= 10) {
+                $(".result-time h1").text("1 : " + time-60);
               } else {
-                $(".result-time h1").text("1 : 0" + gameSeconds-60);
+                $(".result-time h1").text("1 : 0" + time-60);
               }
               
             } else {
-              if (gameSeconds>=10) {
-                $(".result-time h1").text("0 : " + gameSeconds);
+              if (time>=10) {
+                $(".result-time h1").text("0 : " + time);
               } else {
-                $(".result-time h1").text("0 : 0" + gameSeconds);
+                $(".result-time h1").text("0 : 0" + time);
               }
             }
             
           } else {
-            $(".result-time h1").text("0 : 00" + gameSeconds);
+            $(".result-time h1").text("0 : 00");
           }
           $(".result-score h1").text(grade + " / 10");
           
