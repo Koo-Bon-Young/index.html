@@ -57,6 +57,10 @@ body {
     display: none;
 }
 
+.input-answer {
+    font-weight: 900;
+}
+
 @keyframes progress {
     0% {width: 0%;}
     100% {width: 100%;}

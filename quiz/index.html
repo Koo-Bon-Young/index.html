@@ -22,16 +22,16 @@
       <div class="progress">
         <div class="progress-bar bg-warning index-progress" role="progressbar" style="width: 0%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">1/10</div>
       </div>
-      <div class="title text-center py-5">
+      <div class="title text-center py-3">
         <h1>노래 맞추기 게임<br><font style="font-family: 'Montserrat', sans-serif; color: deeppink"> for <strong>MJ</strong></font></h1>
         <h2></h2>
       </div>
 
-      <div class="pass-button-container py-3">
+      <div class="pass-button-container py-1">
         <button type="button" class="btn btn-primary pass-button" disabled>건너뛰기</button>
       </div>
 
-      <div class="level-container text-center py-5">
+      <div class="level-container text-center py-3">
         <h3>난이도</h3>
         <div class="row justify-content-center">
           <div class="level">
@@ -61,7 +61,7 @@
         <img src="img/main.png" class="img-fluid mx-auto d-block" />
       </div>
 
-      <div class="blob-container row justify-content-center">
+      <div class="blob-container row justify-content-center py-1">
         <div class="blob-green text-center blob">
           <i class="fab fa-9x fa-itunes-note text-center" style="color: white;"></i>
         </div>
@@ -96,12 +96,12 @@
         <div id="player" style="display: none;"></div>
       </div>
 
-      <div class="start-button-container py-5">
+      <div class="start-button-container py-3">
         <button type="button" class="btn btn-danger start-button">노래 맞추기 시작하기</button>
       </div>
 
-      <div class="input-container py-5">
-        <div class="input-group py-3">
+      <div class="input-container py-1">
+        <div class="input-group py-1">
           <div class="input-group-prepend">
             <span class="input-group-text" id="inputGroup-sizing-default">정답</span>
           </div>
@@ -125,7 +125,7 @@
 
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-      console.log( '사계 (Four Seasons)'.replace(/ /gi, "").split('(')[0] );
+
       let time = 0;
       let num = 1;
       let level = 1;
@@ -261,11 +261,23 @@
 
             if ( answer.includes("'") ) {
               answer = answer.split("'")[1].replace(/ /gi, "");
+            } else if ( answer.includes("‘") ) {
+              answer = answer.split("‘")[1].split("’")[0].replace(/ /gi, "");
             } else if ( answer.includes("-") ) {
               answer = answer.split("-")[1].replace(/ /gi, "");
+            } else if ( answer.includes("–") ) {
+              answer = answer.split("–")[1].replace(/ /gi, "");
+            } else if ( answer.includes("_") ) {
+              answer = answer.split("_")[1].replace(/ /gi, "");
             } else {
               answer = answer.replace(/ /gi, "");
             }
+
+            answer = answer.replace(/\!/g, "");
+            answer = answer.replace(/\@/g, "");
+            answer = answer.replace(/\#/g, "");
+            answer = answer.replace(/\*/g, "");
+            answer = answer.replace(/\&/g, "");
 
             if ( answer.includes("(") ) {
               answer = answer.split("(")[0];
@@ -368,26 +380,26 @@
           }
           $(".result-score h1").text(grade + " / 10");
           
-          if (grade==10) {
+          if (grade>=10) {
             $(".profile img").attr("src", "img/ai.png");
             $(".profile h5").text("기계");
             $(".result-person h4").text("놀라워요.. AI인가요?");
-          } else if (grade==8) {
+          } else if (grade>=8) {
             $(".profile img").attr("src", "img/kim.png");
             $(".profile h5").text("김희철");
             $(".result-person h4").text("굉장한 실력이에요!");
             $(".result-person h4").append("“<br>고성능 노래 검색기”");
-          } else if (grade==6) {
+          } else if (grade>=6) {
             $(".profile img").attr("src", "img/mj.png");
             $(".profile h5").text("MJ");
             $(".result-person h4").text("뛰어난 실력을 갖고 있네요.");
             $(".result-person h4").append("<br>서구에 거주하는 대장부 노래 검색기.");
-          } else if (grade==4) {
+          } else if (grade>=4) {
             $(".profile img").attr("src", "img/lee.png");
             $(".profile h5").text("이수근");
             $(".result-person h4").text("괜찮은 실력이군요.");
             $(".result-person h4").append("<br>인간미 있는 노래 검색기.");
-          } else if (grade==2) {
+          } else if (grade>=2) {
             $(".profile img").attr("src", "img/eun.png");
             $(".profile h5").text("은지원");
             $(".result-person h4").text("나쁘지 않은 실력이군요.");
