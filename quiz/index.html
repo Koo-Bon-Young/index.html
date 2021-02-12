@@ -372,21 +372,23 @@
       $(".start-button").on("click", function() {
         $(".title h2").text("");
         if ( $(".start-button").text()=="결과보기" ) {
+          console.log("gameSeconds : " + gameSeconds);
+          console.log("time : " + time);
           $(".start-button").hide();
           $(".title h1").text("게임 결과");
           if (gameSeconds!=0) {
             if (time >= 60) {
               if (time-60 >= 10) {
-                $(".result-time h1").text("1 : " + time-60);
+                $(".result-time h1").text("1 : " + string(time-60));
               } else {
-                $(".result-time h1").text("1 : 0" + time-60);
+                $(".result-time h1").text("1 : 0" + string(time-60));
               }
               
             } else {
               if (time>=10) {
-                $(".result-time h1").text("0 : " + time);
+                $(".result-time h1").text("0 : " + string(time));
               } else {
-                $(".result-time h1").text("0 : 0" + time);
+                $(".result-time h1").text("0 : 0" + string(time));
               }
             }
             
