@@ -126,6 +126,11 @@
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
 
+      let playList = []; 
+
+      playList[0] = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=PLberYIcFsD68X_8bqTlwivUWTF4llVlBb&key=AIzaSyBFvVdPJQvzgcOBm1C1GLItXpOudlxZ6Cg";
+      playList[1] = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=PLberYIcFsD69ceU1H3PE2iddP2AMLpJ2r&key=AIzaSyBFvVdPJQvzgcOBm1C1GLItXpOudlxZ6Cg";
+      
       let time = 0;
       let num = 1;
       let level = 1;
@@ -244,10 +249,11 @@
       }
 
       function loadPlayList() {
+        let url = playList[Math.floor(Math.random() * 2)];
         $.ajax({
           type: "GET",
           dataType: "JSON",
-          url: "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=PLberYIcFsD68X_8bqTlwivUWTF4llVlBb&key=AIzaSyBFvVdPJQvzgcOBm1C1GLItXpOudlxZ6Cg",
+          url: url,
           contentType: "application/json",
           success: function (jsonData) {
             // console.log(jsonData)
@@ -260,7 +266,13 @@
             // console.log(items.snippet.title.split("'")[1]);
 
             if ( answer.includes("'") ) {
-              answer = answer.split("'")[1].replace(/ /gi, "");
+              if (answer.includes("Girls")) {
+                answer = answer.split("'")[2].replace(/ /gi, "");
+              } else {
+                answer = answer.split("'")[1].replace(/ /gi, "");
+              }
+            } else if ( answer.includes('"') ) {
+              answer = answer.split('"')[1].replace(/ /gi, "");
             } else if ( answer.includes("‘") ) {
               answer = answer.split("‘")[1].split("’")[0].replace(/ /gi, "");
             } else if ( answer.includes("-") ) {
@@ -277,7 +289,9 @@
             answer = answer.replace(/\@/g, "");
             answer = answer.replace(/\#/g, "");
             answer = answer.replace(/\*/g, "");
-            answer = answer.replace(/\&/g, "");
+            answer = answer.replace(/\-/g, "");
+            answer = answer.replace(/\./g, "");
+            answer = answer.replace(/\_/g, "");
 
             if ( answer.includes("(") ) {
               answer = answer.split("(")[0];

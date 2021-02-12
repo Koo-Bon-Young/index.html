@@ -298,3 +298,10 @@ strong {
     /* If max-width does not work, try using width instead */
     /* width: 350px;  */
 }
+
+@media screen and (max-width: 980px) {
+   .here span {
+       display: block;
+   }
+}
+
