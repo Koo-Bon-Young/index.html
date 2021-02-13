@@ -24,7 +24,7 @@
       </div>
       <div class="title text-center py-3">
         <h1>노래 맞추기 게임<br><font style="font-family: 'Montserrat', sans-serif; color: deeppink"> for <strong>MJ</strong></font></h1>
-        <h2><span data-html="true" data-toggle="tooltip" data-placement="right" title="1. 정답입력 : 띄어쓰기 및 대소문자 구분 없음<br>2. 제한시간 : 180초<br>3. 난이도 : 1단계 ~ 5단계, 난이도에 따라 재생시간 감소<br>4. 건너뛰기 기능 : 모르는 노래 스킵 가능<br>5. 게임 결과 : 시간이 초과되거나 10문제 진행 후 확인"><i class="fas fa-exclamation-circle"></i> 게임방법</span></h2>
+        <h2><span data-html="true" data-toggle="tooltip" data-placement="right" title="1. 정답입력 : 띄어쓰기 및 대소문자 구분 없음<br>2. 제한시간 : 150초<br>3. 난이도 : 1단계 ~ 5단계, 난이도에 따라 재생시간 감소<br>4. 건너뛰기 기능 : 모르는 노래 스킵 가능<br>5. 게임 결과 : 시간이 초과되거나 10문제 진행 후 확인"><i class="fas fa-exclamation-circle"></i> 게임방법</span></h2>
       </div>
 
       <div class="pass-button-container py-1">
@@ -113,7 +113,7 @@
       </div>
 
       <div class="progress-container my-5">
-        <h2>총 제한시간 180초</h2>
+        <h2>총 제한시간 150초</h2>
         <div class="progress">
           <div class="progress-bar bg-danger progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="">
             asdads
@@ -201,7 +201,7 @@
         }
       }
       
-      let gameSeconds = 180; // 게임 제한시간
+      let gameSeconds = 150; // 게임 제한시간
 
       function gameTimer() {
         $(".progress-container .progress-bar").text(gameSeconds +"초")
@@ -266,7 +266,8 @@
             // console.log(items.snippet.title.split("'")[1]);
 
             if ( answer.includes("'") ) {
-              if (answer.includes("Girls")) {
+              if (answer.toLowerCase().includes("girls")) {
+                answer = answer.split("_")[1].replace(/ /gi, "");
                 answer = answer.split("'")[2].replace(/ /gi, "");
               } else {
                 answer = answer.split("'")[1].replace(/ /gi, "");
@@ -292,7 +293,6 @@
             answer = answer.replace(/\-/g, "");
             answer = answer.replace(/\./g, "");
             answer = answer.replace(/\_/g, "");
-            answer = answer.replace(/\,/g, "");
 
             if ( answer.includes("(") ) {
               answer = answer.split("(")[0];
@@ -328,8 +328,9 @@
 
           $(".input-container input").val("");
           $(".input-container").hide();
-          $(".start-button").text("다음문제");
-          $(".start-button").show();
+          gameStart();
+          // $(".start-button").text("다음문제");
+          // $(".start-button").show();
           $(".blob-container").hide();
           $(".pass-button-container").hide();
           level++;
@@ -375,8 +376,9 @@
             $(".pass-button-container").hide();
             $(".input-container input").val("");
             $(".input-container").hide();
-            $(".start-button").text("다음문제");
-            $(".start-button").show();
+            gameStart();
+            // $(".start-button").text("다음문제");
+            // $(".start-button").show();
             $(".blob-container").hide();
             num++;
           }
@@ -385,6 +387,7 @@
 
       // 첫 화면 시작
       $(".start-button").on("click", function() {
+        
         $(".title h2").text("");
         if ( $(".start-button").text()=="결과보기" ) {
           console.log("gameSeconds : " + gameSeconds);
@@ -449,6 +452,7 @@
           gTimer = setInterval(gameTimer, 1000);
           $(".progress-container .progress-bar").addClass("remain-time");
         }
+        $(".start-button").hide();
         gameStart();
       });
 
