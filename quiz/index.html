@@ -268,8 +268,7 @@
             // console.log(items.snippet.title.split("'")[1]);
 
             if ( answer.includes("'") ) {
-              if (answer.toLowerCase().includes("girls")) {
-                answer = answer.split("_")[1].replace(/ /gi, "");
+              if (answer.includes("Girls")) {
                 answer = answer.split("'")[2].replace(/ /gi, "");
               } else {
                 answer = answer.split("'")[1].replace(/ /gi, "");
