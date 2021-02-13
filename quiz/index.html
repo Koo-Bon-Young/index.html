@@ -168,11 +168,12 @@
       }
 
       let playSeconds = 0; // 음악 재생시간
+      let endTimer;
 
       function startVideo() {
         player.loadVideoById(videoId, start);
         player.playVideo();
-        setTimeout(endVideo, playSeconds);
+        endTimer = setTimeout(endVideo, playSeconds);
       }
 
       let seconds = 3; // 음악재생 카운트 다운
@@ -207,8 +208,9 @@
         $(".progress-container .progress-bar").text(gameSeconds +"초")
         if (gameSeconds==0) { 
           gameFlag = false;     
+          clearInterval(timer);
+          clearTimeout(endTimer);
           clearInterval(gameTimer);
-          player.pauseVideo();
           $(".level-container").hide();
           $(".title").hide();
           $(".blob-container").hide();
@@ -293,6 +295,7 @@
             answer = answer.replace(/\-/g, "");
             answer = answer.replace(/\./g, "");
             answer = answer.replace(/\_/g, "");
+            answer = answer.replace(/\,/g, "");
 
             if ( answer.includes("(") ) {
               answer = answer.split("(")[0];
@@ -311,6 +314,9 @@
 
       function checkAnswer() {
         if ( $(".input-answer").val().replace(/ /gi, "").toLowerCase()==answer ) {
+          endVideo();
+          clearInterval(timer);
+          clearTimeout(endTimer);
           Swal.fire({
             icon: 'success',
             title: '정답입니다!',
@@ -328,13 +334,12 @@
 
           $(".input-container input").val("");
           $(".input-container").hide();
-          gameStart();
-          // $(".start-button").text("다음문제");
-          // $(".start-button").show();
           $(".blob-container").hide();
           $(".pass-button-container").hide();
           level++;
           num++;
+          gameStart();
+          
 
         } else {
           Swal.fire({
@@ -376,11 +381,10 @@
             $(".pass-button-container").hide();
             $(".input-container input").val("");
             $(".input-container").hide();
-            gameStart();
-            // $(".start-button").text("다음문제");
-            // $(".start-button").show();
             $(".blob-container").hide();
             num++;
+            gameStart();
+            
           }
         })
       });
